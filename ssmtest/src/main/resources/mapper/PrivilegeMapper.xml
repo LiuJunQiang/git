@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssmtest.beans.Privilege">
+	<resultMap type="com.ssmtest.beans.Privilege" id="privilegeRM">
+		<id property="privilegeID" column="privilegeID"/>
+		<result property="privilegeName" column="privilegeName"/>
+		<result property="url" column="url"/>
+		<result property="icon" column="icon"/>
+		<result property="orderNumber" column="orderNumber"/>
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.ssmtest.beans.Privilege">
+		insert into privilege 
+		(privilegeName,url,icon,orderNumber)
+		values(#{privilegeName},#{url},#{icon},#{orderNumber})
+	</insert>
+	<delete id="delete" parameterType="com.ssmtest.beans.Privilege">
+		delete from privilege
+		where privilegeID=#{privilegeID}
+	</delete>
+	<update id="update" parameterType="com.ssmtest.beans.Privilege">
+		update privilege set
+		privilegeName=#{privilegeName},url=#{url},icon=#{icon},orderNumber=#{orderNumber}
+		where privilegeID=#{privilegeID}
+	</update>
+	<select id="selectOne" parameterType="com.ssmtest.beans.Privilege" resultMap="privilegeRM">
+		select * from privilege
+		where privilegeID=#{privilegeID}
+	</select>
+	<select id="selectList" parameterType="map" resultMap="privilegeRM">
+		select * from privilege
+	</select>
+</mapper>
