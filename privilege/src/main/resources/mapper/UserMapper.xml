@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.privilege.beans.User">
+	<resultMap type="com.privilege.beans.User" id="userRM">
+		<id property="id" column="userID"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+	</resultMap>
+	
+	<resultMap type="com.privilege.beans.User" id="user_rolesRM" extends="userRM">
+		<collection property="roles" ofType="com.privilege.beans.Role">
+			<id property="id" column="roleID"/>
+			<result property="roleName" column="roleName"/>
+			<result property="roleDesc" column="roleDesc"/>
+		</collection>
+	</resultMap>
+	
+	
+	<insert id="insert" parameterType="com.privilege.beans.User">
+		insert into user 
+		(username,password)
+		values(#{username},#{password})
+	</insert>
+	<delete id="delete" parameterType="com.privilege.beans.User">
+		delete from user
+		where userID=#{id}
+	</delete>
+	<update id="update" parameterType="com.privilege.beans.User">
+		update user set
+		username=#{username},password=#{password}
+		where userID=#{id}
+	</update>
+	<select id="selectOne" parameterType="com.privilege.beans.User" resultMap="userRM">
+		select * from user
+		where username=#{username } and password = #{password }
+	</select>
+	<select id="selectList" parameterType="map" resultMap="user_rolesRM">
+		select * from user
+	</select>
+	
+	<select id="login" parameterType="com.privilege.beans.User" resultMap="userRM">
+		select * from user
+		where username=#{username } and password=#{password}
+	</select>
+	
+	<insert id="saveRelativity" parameterType="com.privilege.beans.User_Role">
+		insert into user_role
+		(userID,roleID)
+		values(#{userID},#{roleID})
+	</insert>
+	<delete id="deleteRelaytivity" parameterType="com.privilege.beans.User">
+		delete from user_role
+		where userID=#{id}
+	</delete>
+</mapper>
